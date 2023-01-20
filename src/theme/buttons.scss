@@ -1,0 +1,18 @@
+@import './colors.scss';
+
+.secondary-btn {
+  border: 1px solid $c-red;
+  color: $c-red;
+  background-color: $c-white;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    color: $c-white;
+    background-color: $c-red;
+    border: 1px solid $c-black;
+  }
+}

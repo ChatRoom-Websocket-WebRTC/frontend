@@ -1,0 +1,204 @@
+@import './colors.scss';
+@import './settings.scss';
+@import './buttons.scss';
+@import './inputs.scss';
+
+// reset common styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: iranyekan, sans-serif !important;
+}
+
+a {
+  text-decoration: none;
+  color: $c-black;
+}
+
+body,
+button,
+input,
+textarea {
+  font-family: iranyekan, sans-serif;
+  
+}
+
+// change scrollbar default styles
+html {
+  --scrollbarBG: #f1f1f1;
+  --thumbBG: $c-gray-80;
+}
+*::-webkit-scrollbar {
+  width: 14px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+  border-radius: 8px;
+  border: 3px solid var(--scrollbarBG);
+}
+
+// skeleton styles
+$color-highlight: lighten($c-gray-95, 7%);
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: $c-gray-95;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, $c-gray-95, $color-highlight, $c-gray-95);
+    animation: skeleton-progress 1s linear forwards infinite;
+    will-change: transform;
+  }
+}
+
+@keyframes skeleton-progress {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.kp-text-input {
+  &__label {
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  &__input,
+  &__textarea {
+    background-color: #f1f1f1;
+    color: #333;
+    padding: 12px 16px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+    margin-bottom: 16px;
+    outline: none;
+
+    &::placeholder {
+      color: #bbb;
+    }
+  }
+
+  &__textarea {
+    height: 120px;
+    resize: none;
+  }
+}
+
+.success-btn {
+  background-color: #29a877;
+  color: $c-white;
+  border: 1px solid rgba(37, 93, 173, 0.25);
+  padding: 8px 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(41, 168, 119, 0.35);
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #249468;
+  }
+}
+
+.danger-btn {
+  background-color: #f15d5d;
+  color: $c-white;
+  border: 1px solid rgba(37, 93, 173, 0.25);
+  padding: 8px 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px #f15d5d;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #df5555;
+  }
+}
+
+.info-btn {
+  background-color: rgb(37, 93, 173);
+  color: $c-white;
+  border: 1px solid rgba(37, 93, 173, 0.25);
+  padding: 8px 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(37, 93, 173, 0.35);
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(31, 79, 146);
+  }
+}
+
+.orange-btn {
+  background-color: rgb(255, 151, 109);
+  color: $c-white;
+  border: 1px solid rgba(255, 151, 109, 0.25);
+  padding: 8px 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(255, 151, 109, 0.35);
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(228, 132, 94);
+  }
+}
+
+.yellow-btn {
+  background-color: #f8ab2e;
+  color: $c-white;
+  border: 1px solid #e6a235;
+  padding: 8px 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(255, 209, 109, 0.35);
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e6a235;
+  }
+}
+
+.pink-btn {
+  background-color: rgb(244, 121, 131);
+  color: $c-white;
+  border: 1px solid rgba(244, 121, 131, 0.25);
+  padding: 8px 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(244, 121, 131, 0.35);
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(226, 109, 119);
+  }
+}
+
+@function color($color-name) {
+  @return var(--color-#{$color-name});
+}

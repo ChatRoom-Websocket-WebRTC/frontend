@@ -1,0 +1,105 @@
+@import 'src/theme/main.scss';
+.notfound {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  &__container {
+    position: absolute;
+    border-radius: 32px;
+    width: calc(100% - 128px);
+    height: calc(100% - 128px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-image: linear-gradient(to left, $c-green4, $c-orange1);
+    box-shadow: 0 0 16px $c-black-40;
+    padding: 4px;
+  }
+  &__container-body {
+    width: 100%;
+    height: 100%;
+    background-color: $c-white10;
+    border-radius: 28px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 16px;
+  }
+  &__img {
+    height: calc(100% - 128px);
+    max-height: 1200px;
+    max-width: 50%;
+    align-self: flex-end;
+  }
+  &__text {
+    text-align: center;
+  }
+  &__title {
+    font-size: 96px;
+    font-weight: 800;
+  }
+  &__description {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 32px;
+  }
+  &__back-home-btn {
+    background-color: $c-green4;
+    color: $c-white;
+    padding: 15px 24px;
+    border-radius: 42px;
+    border: none;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: $c-green5;
+    }
+  }
+  &__tile {
+    width: 50%;
+    height: 50%;
+  }
+  &__tile-1 {
+    background-color: $c-yellow;
+  }
+  &__tile-2 {
+    background-color: $c-orange1;
+  }
+  &__tile-3 {
+    background-color: $c-green4;
+  }
+  &__tile-4 {
+    background-color: $c-white6;
+  }
+  @media (max-width: 768px) {
+    &__container {
+      width: calc(100% - 64px);
+      height: calc(100% - 64px);
+    }
+    &__container-body {
+      flex-direction: column-reverse;
+      justify-content: space-between;
+    }
+    &__img {
+      height: 50%;
+      max-width: 100%;
+      align-self: center;
+    }
+    &__text {
+      margin-top: 32px;
+    }
+    &__title {
+        font-size: 64px;
+      }
+      &__description {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 32px;
+      }
+  }
+}
