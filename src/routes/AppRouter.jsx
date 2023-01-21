@@ -15,6 +15,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Routes>
 
+        <Route path="/" element={<LoginPage />} />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/chat" element={<Chat />} />

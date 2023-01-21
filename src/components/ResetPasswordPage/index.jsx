@@ -61,7 +61,7 @@ const ResetPasswordPage = () => {
     onSubmit: async values => {
       try {
         setLoading(true);
-        const res = await axios.post(`${baseUrl}/auth/users/reset_password_confirm/`, {
+        const res = await axios.post(`${baseUrl}/accounts/auth/reset-password/confirm/`, {
           new_password: values.password1,
           re_new_password: values.password1,
           uid,
