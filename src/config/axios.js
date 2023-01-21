@@ -6,7 +6,7 @@ apiInstance.defaults.baseURL = baseUrl;
 
 apiInstance.interceptors.request.use(
   config => {
-    const access_token = localStorage.getItem('access-token');
+    const access_token = localStorage.getItem('access_token');
     if (access_token) {
       config.headers['Authorization'] = 'JWT ' + access_token;
     }
@@ -25,7 +25,7 @@ apiInstance.interceptors.response.use(
       if (error.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
         Axios.post(`${baseUrl}/accounts/jwt/refresh`, {
-          refresh: localStorage.getItem('refresh-token'),
+          refresh: localStorage.getItem('refresh_token'),
         })
           .then(res => {
             localStorage.setItem('access-token', res.access);

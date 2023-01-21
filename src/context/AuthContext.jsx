@@ -6,7 +6,6 @@ const authContext = createContext();
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isSpecial, setIsSpecial] = useState(false);
   const [user, setUser] = useState(null);
 
   const updateInfo = useCallback(() => {
@@ -18,7 +17,6 @@ export function AuthProvider({ children }) {
         setUser(data);
         setIsLoggedIn(true);
         setIsAdmin(data.is_admin);
-        setIsSpecial(data.is_special);
       })
       .catch(error => {
         console.log(error);
@@ -30,8 +28,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = useCallback((access_token, refresh_token) => {
-    localStorage.setItem('access-token', access_token);
-    localStorage.setItem('refresh-token', refresh_token);
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh_token', refresh_token);
     updateInfo();
   }, []);
 
@@ -39,9 +37,8 @@ export function AuthProvider({ children }) {
     setUser(null);
     setIsLoggedIn(false);
     setIsAdmin(false);
-    setIsSpecial(false);
-    localStorage.removeItem('access-token');
-    localStorage.removeItem('refresh-token');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }, []);
 
   return (
@@ -53,9 +50,8 @@ export function AuthProvider({ children }) {
           user,
           isLoggedIn,
           isAdmin,
-          isSpecial,
         }),
-        [login, logout, isLoggedIn, isAdmin, isSpecial, user]
+        [login, logout, isLoggedIn, isAdmin, user]
       )}
     >
       {children}
