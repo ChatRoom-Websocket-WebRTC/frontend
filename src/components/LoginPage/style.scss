@@ -1,0 +1,49 @@
+@import '/src/theme/main.scss';
+
+.test {
+  padding: 10px;
+  margin: 10px auto;
+  border-color: blue;
+}
+
+.responsive {
+  width: 90%;
+  height: auto;
+  margin: auto;
+}
+
+.Toastify__toast-body {
+  font-family: 'iranyekan';
+}
+
+.login-link__not-registered {
+  text-decoration: none !important;
+}
+
+.login-link__forget-password {
+  text-decoration: none !important;
+}
+
+.login-page-button {
+  background-color: rgb(25, 114, 155) !important;
+}
+
+.login-page-avatar {
+  background-color: rgb(25, 114, 155) !important;
+}
+
+// .Toastify__toast--error {
+//   background: rgb(49, 3, 102) !important;
+// }
+
+.Toastify__toast--success {
+  color: #fff !important;
+  background: rgb(4, 61, 61) !important;
+}
+
+.loading-login {
+  height: 30px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

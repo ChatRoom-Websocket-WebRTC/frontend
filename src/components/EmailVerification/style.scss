@@ -1,0 +1,55 @@
+@import '/src/theme/main.scss';
+
+.email-verification-container {
+  height: 50px;
+
+  width: 300px;
+}
+
+.email-verification-character {
+  line-height: 50px;
+
+  font-size: 36px;
+
+  color: white;
+
+  background-color: rgb(98, 84, 159);
+
+  border: 1px solid transparent;
+
+  border-radius: 10px;
+
+  margin-left: 8px;
+}
+
+.character:first-child {
+  margin-left: 0;
+}
+
+.character--inactive {
+  background-color: rgb(240, 146, 164);
+}
+
+.character--selected {
+  border: 1px solid white;
+
+  color: rgb(163, 216, 165);
+}
+
+.Toastify__toast--error {
+  background: rgb(49, 3, 102) !important;
+}
+
+.Toastify__toast--success {
+  background: rgb(4, 61, 61) !important;
+}
+
+.resend-code {
+  background-color: rgb(99, 36, 200) !important;
+
+  &:disabled {
+    background-color: #ddd !important;
+
+    color: #888 !important;
+  }
+}

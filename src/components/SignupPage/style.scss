@@ -1,0 +1,21 @@
+@import '/src/theme/main.scss';
+
+.responsive {
+  width: 100%;
+  height: auto;
+}
+
+// .Toastify__toast--error {
+//   background: rgb(49, 3, 102) !important;
+// }
+
+.Toastify__toast--success {
+  background: rgb(4, 61, 61) !important;
+}
+
+.loading-signup {
+  height: 30px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

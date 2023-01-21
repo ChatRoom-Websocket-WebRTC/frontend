@@ -1,0 +1,47 @@
+@import '../../scss/variables/colors';
+@import '../../scss/common';
+
+.rcw-messages-container {
+  background-color: $white;
+  height: 90vh;
+  max-height: 75vh !important;
+  overflow-y: scroll;
+  padding-top: 10px;
+  padding-left: 17px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rcw-full-screen {
+
+  .rcw-messages-container {
+    @include messages-container-fs;
+    height: 100vh !important;
+  }
+}
+
+@media screen and (max-width: 800px)  {
+  .rcw-messages-container {
+    @include messages-container-fs;
+  }
+}
+
+
+.rcw-message{
+  width: 99% !important;
+  word-wrap: break-word !important;
+  text-align: right;
+  justify-content:right !important;
+  margin: 0px 0 -30px 0;
+
+}
+
+
+.rcw-message-server{
+  direction: ltr;
+  justify-content: left !important;
+}
+
+#rcw-message-server-id{
+  direction: ltr;
+  justify-content: left !important;
+}

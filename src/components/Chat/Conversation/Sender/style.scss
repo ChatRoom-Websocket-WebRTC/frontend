@@ -1,0 +1,87 @@
+@import '../../scss/variables/colors';
+
+.rcw-sender {
+  align-items: flex-end;
+  background-color: $grey-2;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  height: max-content;
+  max-height: 95px;
+  min-height: 45px;
+  overflow: hidden;
+  padding: 10px;
+  position: fixed;
+  bottom: 0 !important;
+  margin: 10px !important;
+  width: 98%;
+
+  &.expand {
+    height: 55px;
+  }
+}
+
+.rcw-new-message {
+  background-color: $white;
+  border: 0;
+  border-radius: 5px;
+  padding: 10px 5px;
+  resize: none;
+  width: calc(100% - 30px);
+  margin-left: 8px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.expand {
+    height: 40px;
+  }
+}
+
+.rcw-input {
+  display: block;
+  user-select: text;
+  line-height: 42px !important;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  width: 100% !important;
+  direction: rtl !important;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &[placeholder]:empty::before {
+    content: attr(placeholder);
+    color: $grey-0;
+  }
+}
+
+.rcw-send,
+.rcw-picker-btn {
+  background: $grey-2;
+  border: 0;
+  cursor: pointer;
+
+  .rcw-send-icon {
+    height: 30px;
+    margin: 15px 10px !important;
+    align-items: center;
+    justify-content: center;
+    &:hover{
+      height: 34px;
+    }
+  }
+}
+
+.rcw-message-disable {
+  background-color: $grey-2;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 800px) {
+  .rcw-sender {
+    border-radius: 0;
+    flex-shrink: 0;
+  }
+}
