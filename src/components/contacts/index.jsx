@@ -52,8 +52,8 @@ function ContactTable(props) {
           <TableRow>
             <TableCell>User-ID</TableCell>
             <TableCell align="right">Name</TableCell>
-            <TableCell align="right">Email</TableCell>
             <TableCell align="right">Phone</TableCell>
+            <TableCell align="right">Email</TableCell>
             {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
           </TableRow>
         </TableHead>
