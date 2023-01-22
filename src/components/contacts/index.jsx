@@ -1,4 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import './style.css'
 
 function ContactRow(props) {
@@ -14,6 +24,7 @@ function ContactRow(props) {
 function ContactTable(props) {
 
     const [contactlist, setContactlist] = useState([]);
+    const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
         var rows = [];
@@ -24,22 +35,54 @@ function ContactTable(props) {
             rows.push(<ContactRow key={contact.key} contact={contact} />);
           });
         setContactlist([...rows])
-        console.log("HELLO");
-        console.log(rows);
-        console.log(contactlist)
+        setContacts([...props.contacts])
+        // console.log("HELLO");
+        // console.log(rows);
+        // console.log(contactlist)
     }, [props.contacts]);
 
+    const rows = [1, 2, 3, 4, 5]
     return (
-        <table className='table table-hover'>
-          <thead>
-            <tr>
-              <th><i className="fa fa-fw fa-user"></i>Name</th>
-              <th><i className="fa fa-fw fa-phone"></i>Phone</th>
-              <th><i className="fa fa-fw fa-envelope"></i>Email</th>
-            </tr>
-          </thead>
-          <tbody>{contactlist}</tbody>
-        </table>
+      
+        <Box paddingLeft="20%" paddingRight="20%">
+          <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        
+        <TableHead>
+          <TableRow>
+            <TableCell>User-ID</TableCell>
+            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Email</TableCell>
+            <TableCell align="right">Phone</TableCell>
+            {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {contacts.map((contact) => (
+            <TableRow
+              key={contact.key}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+                {contact.key}
+              </TableCell>
+              <TableCell align="right">{contact.name}</TableCell>
+              <TableCell align="right">{contact.phone}</TableCell>
+              <TableCell align="right">{contact.email}</TableCell>
+              <TableCell align="right">
+                <Button variant="contained">Call</Button>
+              </TableCell>
+              <TableCell align="right">
+                <Button variant="contained">Chat</Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        
+      </Table>
+      </TableContainer>
+      </Box>
+    
     );
 }
 
@@ -48,15 +91,13 @@ function SearchBar() {
     const [filterTextInput, setFilterTextInput] = useState('');
 
     return (
-        <form>
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Search..."
+      <Box paddingLeft={"20%"} paddingRight={"20%"}>
+          <TextField label="Search..." variant="outlined" 
+            fullWidth
+            // margin='dense'
             value={filterTextInput}
-            onChange={event => setFilterTextInput(event.target.value)}
-          />
-        </form>
+            onChange={event => setFilterTextInput(event.target.value)}/>
+      </Box>
     );
 }
   
@@ -93,18 +134,25 @@ function FilterableContactTable() {
       }
 
       return (
-        <div>
+        <Box sx={{
+          display: 'flex',
+          flexDirection: 'Column',
+          alignItems: 'stretch'
+
+        }}>
           <h1>React Contacts List App</h1>
-          <SearchBar
-            // filterText={this.state.filterText}
-            // onFilterTextInput={handleFilterTextInput}
-          />
-          <NewContactRow addContact={addContact}/>
-          <ContactTable
-            contacts={state.contacts}
-            filterText={state.filterText}
-          />
-        </div>
+          <Box flexGrow={12} alignItems="center">
+            <SearchBar
+              // filterText={this.state.filterText}
+              // onFilterTextInput={handleFilterTextInput}
+            />
+            <NewContactRow addContact={addContact}/>
+            <ContactTable
+              contacts={state.contacts}
+              filterText={state.filterText}
+            />
+          </Box>
+        </Box>
       );
 
 } 
@@ -128,22 +176,18 @@ function NewContactRow(props) {
 
     return (
         
-        <form className="form-inline" onSubmit={handleSubmit}>
-         <div className="form-group row">
-           <div className="col-md-3">
-             <input type="text" name="name" className="form-control" id="nameInput" placeholder="Name" />
-           </div>
-           <div className="col-md-3">
-             <input type="text" name="phone" className="form-control" id="phoneInput" placeholder="Phone" />
-           </div>
-           <div className="col-md-3">
-             <input type="email" name="email" className="form-control" id="emailInput" placeholder="Email" />
-           </div>
-           <div className="col-md-3">
-             <button type="submit" className="btn btn-primary"><i className="fa fa-fw fa-plus"></i>Add</button>
-           </div>
-         </div>
-       </form>
+           <Box paddingLeft={"20%"} paddingRight={"20%"} display={"flex"} flexDirection={"row"}>
+              <TextField label="name" variant="outlined" flexGrow={4}
+                />
+                <TextField label="Phone" variant="outlined" flexGrow={4}
+                />
+                <TextField label="Email" variant="outlined" flexGrow={4}
+                />
+                <Button variant="contained">Add</Button>
+          </Box>
+          //  <div className="col-md-3">
+          //    <button type="submit" className="btn btn-primary"><i className="fa fa-fw fa-plus"></i>Add</button>
+          //  </div>
            
      )
 }
