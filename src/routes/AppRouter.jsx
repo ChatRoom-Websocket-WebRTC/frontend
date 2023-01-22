@@ -9,6 +9,7 @@ import EmailVerification from "../components/EmailVerification";
 import SignupPage from "../components/SignupPage";
 import ForgetPasswordPage from "../components/ForgetPasswordPage";
 import ResetPasswordPage from "../components/ResetPasswordPage";
+import Contacts from "../components/contacts";
 
 const AppRouter = () => {
   return (
@@ -19,6 +20,7 @@ const AppRouter = () => {
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/chat" element={<Chat />} />
+        <Route path="/contacts" element={<Contacts/>}/>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/email-verification" element={<EmailVerification />} />
         <Route path="/signup" element={<SignupPage />} />
