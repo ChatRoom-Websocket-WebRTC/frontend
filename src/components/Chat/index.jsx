@@ -35,7 +35,11 @@ function Chat(props) {
           console.log("reposen.data", response.data);
         });
     }
-  }, [auth, messages]);
+  }, [auth]);
+
+  useEffect(() => {
+    console.log("messages:", messages);
+  }, [messages]);
 
   const handleNewUserMessage = (message) => {
     console.log("sent", message, chatSocket.current);
@@ -61,6 +65,7 @@ function Chat(props) {
           chatSocket={chatSocket.current}
           messages={messages}
           className={"active"}
+          setMessages={setMessages}
         />
       )}
     </div>

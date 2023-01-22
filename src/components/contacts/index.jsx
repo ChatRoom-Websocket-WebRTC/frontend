@@ -12,8 +12,7 @@ import Paper from '@mui/material/Paper';
 import './style.css'
 import axios from 'axios';
 import { baseUrl } from '../../utils/constants';
-// import store from '../../store/store';
-// import { set } from 'react-hook-form';
+
 
 function ContactRow(props) {
     return (
@@ -33,17 +32,9 @@ function ContactTable(props) {
     useEffect(() => {
         var rows = [];
         console.log("ContactTable");
-        // props.contacts.forEach((contact) => {
-        //     if (contact.name.indexOf(props.filterText) === -1) {
-        //       return;
-        //     }
-        //     rows.push(<ContactRow key={contact.key} contact={contact} />);
-        //   });
-        // setContactlist([...rows])
+
         setContacts([...props.contacts])
-        // console.log("HELLO");
-        // console.log(rows);
-        // console.log(contactlist)
+
         console.log(contacts)
         console.log(contacts.length)
         console.log(contacts[0])

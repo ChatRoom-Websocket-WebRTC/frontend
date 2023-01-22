@@ -1,38 +1,53 @@
-import { useRef, useState, useEffect } from 'react';
-import cn from 'classnames';
+import { useRef, useState, useEffect } from "react";
+import cn from "classnames";
 
-import Header from './Header';
-import Messages from './Messages';
-import Sender from './Sender';
+import Header from "./Header";
+import Messages from "./Messages";
+import Sender from "./Sender";
 
-import './style.scss';
+import "./style.scss";
 
-export default function Conversation(props) {
+export default function Conversation({messages, setMessages, ...props}) {
   const [messageNumber, setMessageNumber] = useState(0);
-  const [messages, setMessages] = useState(props.messages);
+  console.log("propsMessages", messages);
 
   const updateMessages = (sendMessage, message) => {
     setMessageNumber(messageNumber + 1);
-    setMessages([...messages, sendMessage(message)]);
+    setMessages((old) => [...old, sendMessage(message)]);
   };
 
+  useEffect(() => {
+    console.log("meesages in Conversation:", messages);
+  }, [messages]);
+
   props.chatSocket.onmessage = function (e) {
-    console.log('onmessage');
+    console.log("onmessage");
     const data = JSON.parse(e.data);
     // console.log(data);
     if (data.message) {
       console.log(data);
-      if (data.sender_type === 'SERVER') {
-        setMessages([...messages, { message: data.message, sender: 'emad',sender_type: 'SERVER',showTimeStamp:false}]);
+      if (data.sender_type === "SERVER") {
+        setMessages((old) => [
+          ...old,
+          {
+            message: data.message,
+            sender: "emad",
+            sender_type: "SERVER",
+            showTimeStamp: false,
+          },
+        ]);
       }
     } else {
-      alert('The message is empty!');
+      alert("The message is empty!");
     }
   };
 
-
   return (
-    <div id="rcw-conversation-container" className={cn('rcw-conversation-container')} aria-live="polite">
+    <div
+      id="rcw-conversation-container"
+      className={cn("rcw-conversation-container")}
+      aria-live="polite"
+    >
       <Header title={props.title || "ChatRoom"} subtitle={props.subtitle} />
       <Messages
         messages={messages}
