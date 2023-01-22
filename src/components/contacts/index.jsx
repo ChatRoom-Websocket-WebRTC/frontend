@@ -10,6 +10,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import './style.css'
+import axios from 'axios';
+import { baseUrl } from '../../utils/constants';
+// import store from '../../store/store';
+// import { set } from 'react-hook-form';
 
 function ContactRow(props) {
     return (
@@ -28,20 +32,24 @@ function ContactTable(props) {
 
     useEffect(() => {
         var rows = [];
-        props.contacts.forEach((contact) => {
-            if (contact.name.indexOf(props.filterText) === -1) {
-              return;
-            }
-            rows.push(<ContactRow key={contact.key} contact={contact} />);
-          });
-        setContactlist([...rows])
+        console.log("ContactTable");
+        // props.contacts.forEach((contact) => {
+        //     if (contact.name.indexOf(props.filterText) === -1) {
+        //       return;
+        //     }
+        //     rows.push(<ContactRow key={contact.key} contact={contact} />);
+        //   });
+        // setContactlist([...rows])
         setContacts([...props.contacts])
         // console.log("HELLO");
         // console.log(rows);
         // console.log(contactlist)
+        console.log(contacts)
+        console.log(contacts.length)
+        console.log(contacts[0])
     }, [props.contacts]);
 
-    const rows = [1, 2, 3, 4, 5]
+    // const rows = [1, 2, 3, 4, 5]
     return (
       
         <Box paddingLeft="20%" paddingRight="20%">
@@ -51,7 +59,7 @@ function ContactTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>User-ID</TableCell>
-            <TableCell align="right">Name</TableCell>
+            <TableCell align="right">Username</TableCell>
             <TableCell align="right">Phone</TableCell>
             <TableCell align="right">Email</TableCell>
             {/* <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
@@ -66,7 +74,7 @@ function ContactTable(props) {
               <TableCell component="th" scope="row">
                 {contact.key}
               </TableCell>
-              <TableCell align="right">{contact.name}</TableCell>
+              <TableCell align="right">{contact.username}</TableCell>
               <TableCell align="right">{contact.phone}</TableCell>
               <TableCell align="right">{contact.email}</TableCell>
               <TableCell align="right">
@@ -101,20 +109,27 @@ function SearchBar() {
     );
 }
   
-function FilterableContactTable() {
+function FilterableContactTable(props) {
 
     // FilterableContactTable is the owner of the state as the filterText is needed in both nodes (searchbar and table) that are below in the hierarchy tree.
     const [state, setState] = useState({
         filterText: '',
-        contacts : [
-          {key: 1, name: 'Tom Jackson', phone: '555-444-333', email: 'tom@gmail.com'},
-          {key: 2, name: 'Mike James', phone: '555-777-888', email: 'mikejames@gmail.com'},
-          {key: 3, name: 'Janet Larson', phone: '555-222-111', email: 'janetlarson@gmail.com'},
-          {key: 4, name: 'Clark Thompson', phone: '555-444-333', email: 'clark123@gmail.com'},
-          {key: 5, name: 'Emma Pager', phone: '555-444-333', email: 'emma1page@gmail.com'},
+        contacts : props.contacts
+        // [
+        //   {key: 1, name: 'Tom Jackson', phone: '555-444-333', email: 'tom@gmail.com'},
+        //   {key: 2, name: 'Mike James', phone: '555-777-888', email: 'mikejames@gmail.com'},
+        //   {key: 3, name: 'Janet Larson', phone: '555-222-111', email: 'janetlarson@gmail.com'},
+        //   {key: 4, name: 'Clark Thompson', phone: '555-444-333', email: 'clark123@gmail.com'},
+        //   {key: 5, name: 'Emma Pager', phone: '555-444-333', email: 'emma1page@gmail.com'},
   
-        ]
+        // ]
       });
+
+    useEffect(() => {
+      console.log("****");
+      console.log(props.contacts);
+      setState({...state, contacts: props.contacts})
+    }, [props.contacts])
 
     const addContact = (contact) => {
         var timestamp = new Date().getTime();
@@ -142,11 +157,11 @@ function FilterableContactTable() {
         }}>
           <h1>React Contacts List App</h1>
           <Box flexGrow={12} alignItems="center">
-            <SearchBar
+            {/* <SearchBar
               // filterText={this.state.filterText}
               // onFilterTextInput={handleFilterTextInput}
-            />
-            <NewContactRow addContact={addContact}/>
+            /> */}
+            {/* <NewContactRow addContact={addContact}/> */}
             <ContactTable
               contacts={state.contacts}
               filterText={state.filterText}
@@ -192,15 +207,45 @@ function NewContactRow(props) {
      )
 }
 
-var CONTACTS = [
-    {key: 1, name: 'Tom Jackson', phone: '555-444-333', email: 'tom@gmail.com'},
-    {key: 2, name: 'Mike James', phone: '555-777-888', email: 'mikejames@gmail.com'},
-    {key: 3, name: 'Janet Larson', phone: '555-222-111', email: 'janetlarson@gmail.com'},
-    {key: 4, name: 'Clark Thompson', phone: '555-444-333', email: 'clark123@gmail.com'},
-    {key: 5,name: 'Emma Page', phone: '555-444-333', email: 'emma1page@gmail.com'},
-];
+// var CONTACTS = [
+//     {key: 1, name: 'Tom Jackson', phone: '555-444-333', email: 'tom@gmail.com'},
+//     {key: 2, name: 'Mike James', phone: '555-777-888', email: 'mikejames@gmail.com'},
+//     {key: 3, name: 'Janet Larson', phone: '555-222-111', email: 'janetlarson@gmail.com'},
+//     {key: 4, name: 'Clark Thompson', phone: '555-444-333', email: 'clark123@gmail.com'},
+//     {key: 5,name: 'Emma Page', phone: '555-444-333', email: 'emma1page@gmail.com'},
+// ];
   
 const Contacts = () => {
+
+    const [loading, setLoading] = useState(false);
+
+    // const loadContacts = async () => {
+
+    // };
+
+    const [state, setState] = useState([]);
+
+    useEffect(() => {
+      (async() => {
+        setLoading(true);
+        // console.log(store);
+        // console.log(store.getState());
+        const res = await axios.get(`${baseUrl}/accounts/user/a_roudgar/contact-list`);
+        setLoading(false);
+        console.log("RES");
+        console.log(res);
+        // console.log(CONTACTS);
+        var CONTACTS = []
+        for (var i in res.data)
+          CONTACTS.push({"key": i, ...res.data[i]})
+        // console.log(CONTACTS)
+        setState([...CONTACTS])
+        console.log("%%%%%%%%%");
+        console.log(state);
+      }
+      )();
+    }, [])
+
     // document.getElementById('container')
     return(
         <>
@@ -209,7 +254,7 @@ const Contacts = () => {
             <div class="row">
                 <div class="col"></div>
                 <div class="col-10 container" id="container">
-                  <FilterableContactTable/>
+                  <FilterableContactTable contacts={state}/>
                 </div>
                 <div class="col">
                 </div>
