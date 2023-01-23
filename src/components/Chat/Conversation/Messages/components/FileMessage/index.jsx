@@ -9,11 +9,11 @@ var blob = new Blob([props.message.message], {
 
   return (
     <div className={`rcw-${props.message.sender}`}>
-      <div
+      {/* <div
         className={`rcw-message-text ${
           props.is_server ? "rcw-message-cont" : "rcw-message-cont-server"
         }`}
-      />
+      /> */}
       <button>
       <a href={url} download={`default.${props.message.file_extension}`}>
         FILE

@@ -8,19 +8,12 @@ import {
 import cn from "classnames";
 import useAuth from "../../../../context/AuthContext";
 import send from "../../assets/send_button.png";
-// import { Button, FormControl } from "@mui/material";
 import Button from '@mui/material/Button';
-// import FormControl from '@mui/material/FormControl';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
 import "./style.scss";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-// import Box from '@mui/material/Box';
-// import { Container } from "@mui/system";
-import { Dialog, DialogContent } from "@mui/material";
-import {Cloudinary, Transformation} from "@cloudinary/url-gen";
-import {scale} from "@cloudinary/url-gen/actions/resize";
 
 const brRegex = /<br>/g;
 
@@ -64,18 +57,6 @@ function Sender(props, ref) {
   const auth = useAuth();
 
   const [open, setOpen] = useState(false);
-
-  const cld = new Cloudinary({
-    cloud: {
-      cloudName: 'demo'
-    }
-  })
-
-  const myVideo = cld.video('elephants');
-  myVideo.resize(scale().width(400));
-
-  console.log("URL")
-  console.log(myVideo.toURL())
 
   const handleDialogOpen = () => {
     setOpen(true);

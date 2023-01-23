@@ -20,7 +20,7 @@ export default function Messages(props) {
   const isClient = sender => {
     return sender == auth.user.username;
   };
-
+  console.log(props.messages)
   return (
     <div id="messages" className="rcw-messages-container"  dir="ltr">
       {props.messages?.map((message, index) => (
@@ -29,6 +29,7 @@ export default function Messages(props) {
           className={`rcw-message ${isClient(message?.sender) ? 'rcw-message-client' : 'rcw-message-server'}`}
           // key={`${index}-${format(message.timestamp, 'hh:mm')}`}
           key={`${index}`}
+          style={{marginTop: "2%"}}
         >
           {(!isClient(message?.sender) || isClient(message?.sender)) && true && (
             <img
@@ -37,8 +38,8 @@ export default function Messages(props) {
               alt="profile"
             />
           )}
-          {message?.message_type == 'TEXT' && (<Message message={message} showTimeStamp={false} is_server={isClient(message.sender)}/>)}
-          {message?.message_type == 'FILE' && (<FileMessage message={message} is_server={isClient(message.sender)}/>)}
+          {(message?.message_type === 'TEXT') && (<Message message={message} showTimeStamp={false} is_server={isClient(message.sender)}/>)}
+          {(message?.message_type === 'FILE') && (<FileMessage message={message} is_server={isClient(message.sender)}/>)}
         </div>
       ))}
       <Loader typing={props?.messages?.length === 0} />
