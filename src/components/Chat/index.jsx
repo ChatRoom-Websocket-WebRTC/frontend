@@ -17,7 +17,7 @@ function Chat(props) {
       console.log("auth: ", auth);
 
       const newChatSocket = new WebSocket(
-        "ws://" + "127.0.0.1:8000" + "/chat/room/" + auth.user.username + "/"
+        "ws://" + "127.0.0.1:8000" + "/chat/room/" + 'emad' + "/"
       );
 
       newChatSocket.onclose = function (e) {
@@ -28,11 +28,9 @@ function Chat(props) {
       console.log("chatsocket; ", chatSocket);
 
       axios
-        .get(`${baseUrl}/chat/room/messages/${auth.user.username}/`)
+        .get(`${baseUrl}/chat/${'emad'}/messages`)
         .then((response) => {
           setMessages(response.data);
-          console.log("messages", messages);
-          console.log("reposen.data", response.data);
         });
     }
   }, [auth]);
@@ -46,9 +44,9 @@ function Chat(props) {
     chatSocket.current.send(
       JSON.stringify({
         message: message,
-        username: auth.user.username,
-        room_name: auth.user.username,
-        sender_type: "CLIENT",
+        message_type: "TEXT",
+        sender: auth.user.username,
+        room_name: 'emad',
       })
     );
     // console.log("sent");

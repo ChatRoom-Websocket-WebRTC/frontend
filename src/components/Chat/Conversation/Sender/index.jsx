@@ -1,13 +1,8 @@
 import { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
-// import { useSelector } from 'react-redux';
 import cn from 'classnames';
-
-// import { GlobalState } from 'src/store/types';
-
-// import { getCaretIndex, isFirefox, updateCaret, insertNodeAtCaret, getSelection } from '../../../../../../utils/contentEditable'
+import useAuth from "../../../../context/AuthContext";
 import send from '../../assets/send_button.png';
 import './style.scss';
-import { TextField } from '@mui/material';
 
 
 const brRegex = /<br>/g;
@@ -20,12 +15,13 @@ function Sender(props, ref) {
   const [enter, setEnter]= useState(false)
   const [firefox, setFirefox] = useState(false);
   const [height, setHeight] = useState(0)
+  const auth = useAuth()
   // @ts-ignore
   useEffect(() => { if (props.showChat && props.autofocus) inputRef.current?.focus(); }, [props.showChat]);
 
 
   const sendMessage = (message) =>{
-      return {"sender":"emad","message":message,"showAvatar":false, sender_type:"CLIENT"}
+      return {"sender":auth.user.username,"message":message,"showAvatar":false}
   }
 
   const handleSendMessage = () => {

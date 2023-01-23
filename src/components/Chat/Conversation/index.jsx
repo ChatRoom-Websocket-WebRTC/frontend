@@ -4,41 +4,37 @@ import cn from "classnames";
 import Header from "./Header";
 import Messages from "./Messages";
 import Sender from "./Sender";
+import useAuth from "../../../context/AuthContext";
 
 import "./style.scss";
 
 export default function Conversation({messages, setMessages, ...props}) {
   const [messageNumber, setMessageNumber] = useState(0);
-  console.log("propsMessages", messages);
 
   const updateMessages = (sendMessage, message) => {
     setMessageNumber(messageNumber + 1);
     setMessages((old) => [...old, sendMessage(message)]);
   };
+  const auth = useAuth()
 
-  useEffect(() => {
-    console.log("meesages in Conversation:", messages);
-  }, [messages]);
 
   props.chatSocket.onmessage = function (e) {
     console.log("onmessage");
     const data = JSON.parse(e.data);
     // console.log(data);
     if (data.message) {
-      console.log(data);
-      if (data.sender_type === "SERVER") {
+      console.log("onmessage",data);
+      if (data.sender !== auth.user.username) {
+        console.log("sender: ",data.sender,"auth.username",auth.user.usernmae)
         setMessages((old) => [
           ...old,
           {
             message: data.message,
-            sender: "emad",
-            sender_type: "SERVER",
+            sender: data.sender,
             showTimeStamp: false,
           },
         ]);
       }
-    } else {
-      alert("The message is empty!");
     }
   };
 
