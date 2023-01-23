@@ -64,6 +64,7 @@ export default function Conversation({messages, setMessages, ...props}) {
         buttonAlt={props.sendButtonAlt}
         onPressEmoji={props.togglePicker}
         chatSocket={props.chatSocket}
+        setMessages={setMessages}
       />
     </div>
   );

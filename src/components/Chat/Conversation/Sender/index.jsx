@@ -58,8 +58,32 @@ function Sender(props, ref) {
 
   const handleChooseFile = (e) => {
     let file = e.target.files[0];
-    console.log("props",props)
-    props.chatSocket.send(file);
+    console.log("file extension", file.name.split(".")[1]);
+    console.log("props", props);
+    var reader = new FileReader();
+    reader.onload = function () {
+      
+      var base64encoded = btoa(new Uint8Array(reader.result).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+      var message = {
+        message: base64encoded,
+        room_name: localStorage.getItem("room_name"),
+        message_type: "FILE",
+        sender: auth.user.username,
+        file_extension: file.name.split(".")[1]
+      };
+      var jsonString = JSON.stringify(message);
+      console.log("json_to_string:", jsonString)
+      props.chatSocket.send(jsonString);
+
+      let newMessage = {
+        ...message,
+        message: reader.result,
+      };
+      console.log("new_message:", newMessage);
+      props.setMessages((prevMessages) => [...prevMessages, newMessage]);
+    };
+
+    reader.readAsArrayBuffer(file);
   };
 
   const checkSize = () => {
@@ -99,17 +123,16 @@ function Sender(props, ref) {
           contentEditable={!props.disabledInput}
           ref={inputRef}
           placeholder={props.placeholder}
-        >
-        </div>
-          <Button component="label" >
-            <AttachFileIcon className="sender-add-button" />
-            <input
-              type="file"
-              hidden
-              onChange={handleChooseFile}
-              accept=".jpg,.jpeg,.png,.mp4,.mkv"
-            />
-          </Button>
+        ></div>
+        <Button component="label">
+          <AttachFileIcon className="sender-add-button" />
+          <input
+            type="file"
+            hidden
+            onChange={handleChooseFile}
+            accept=".jpg,.jpeg,.png,.mp4,.mkv"
+          />
+        </Button>
       </div>
       <button type="submit" className="rcw-send" onClick={handleSendMessage}>
         <SendIcon className="rcw-send-icon" alt="buttonAlt" dir="ltr" />
