@@ -12,6 +12,9 @@ import Paper from '@mui/material/Paper';
 import './style.css'
 import axios from 'axios';
 import { baseUrl } from '../../utils/constants';
+import useAuth from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { history } from '../../utils/constants';
 
 
 function ContactRow(props) {
@@ -28,6 +31,13 @@ function ContactTable(props) {
 
     const [contactlist, setContactlist] = useState([]);
     const [contacts, setContacts] = useState([]);
+
+    const hist = useNavigate();
+    
+    const handleChatButton = (event) => {
+      history.push('/chat')
+      hist('/chat');
+    };
 
     useEffect(() => {
         var rows = [];
@@ -72,7 +82,13 @@ function ContactTable(props) {
                 <Button variant="contained">Call</Button>
               </TableCell>
               <TableCell align="right">
-                <Button variant="contained">Chat</Button>
+                <Button 
+                  variant="contained"
+                  onClick={handleChatButton}
+                  >
+                  
+                    Chat
+                </Button>
               </TableCell>
             </TableRow>
           ))}
@@ -215,13 +231,15 @@ const Contacts = () => {
     // };
 
     const [state, setState] = useState([]);
+    const auth =  useAuth();
 
     useEffect(() => {
       (async() => {
         setLoading(true);
         // console.log(store);
         // console.log(store.getState());
-        const res = await axios.get(`${baseUrl}/accounts/user/a_roudgar/contact-list`);
+        console.log(auth);
+        const res = await axios.get(`${baseUrl}/accounts/user/${auth.user.username}/contact-list`);
         setLoading(false);
         console.log("RES");
         console.log(res);
