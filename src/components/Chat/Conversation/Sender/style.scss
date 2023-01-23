@@ -2,7 +2,7 @@
 
 .rcw-sender {
   align-items: flex-end;
-  background-color: $grey-2;
+  background-color: rgb(240, 240, 240);
   border-radius: 0 0 10px 10px;
   display: flex;
   height: max-content;
@@ -23,11 +23,12 @@
 .rcw-new-message {
   background-color: $white;
   border: 0;
-  border-radius: 5px;
+  border-radius: 0px;
   padding: 10px 5px;
   resize: none;
   width: calc(100% - 30px);
-  margin-left: 8px;
+  margin: auto;
+  display: -webkit-inline-box;
 
   &:focus {
     outline: none;
@@ -46,6 +47,9 @@
   word-wrap: break-word;
   width: 100% !important;
   direction: rtl !important;
+  align-items: center;
+  margin: auto;
+  display: flex;
 
   &:focus-visible {
     outline: none;
@@ -62,12 +66,17 @@
   background: $grey-2;
   border: 0;
   cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  display: flex;
 
   .rcw-send-icon {
     height: 30px;
     margin: 15px 10px !important;
     align-items: center;
     justify-content: center;
+    color: rgb(40, 151, 170);
     &:hover{
       height: 34px;
     }
@@ -84,4 +93,16 @@
     border-radius: 0;
     flex-shrink: 0;
   }
+}
+
+
+.sender-add-button{
+  position: fixed;
+  display: flexbox;
+  left: 50px;
+  bottom: 40px;
+  justify-content: center;
+  align-items: center;
+  scale: 1.3;
+  color: rgb(40, 151, 170);
 }

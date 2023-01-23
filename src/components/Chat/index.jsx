@@ -11,13 +11,14 @@ function Chat(props) {
 
   const chatSocket = useRef(null);
   const [messages, setMessages] = useState([]);
+  const room_name = localStorage.getItem("room_name");
 
   useEffect(() => {
     if (auth && auth.user && auth.user.username && !chatSocket.current) {
       console.log("auth: ", auth);
 
       const newChatSocket = new WebSocket(
-        "ws://" + "127.0.0.1:8000" + "/chat/room/" + 'emad' + "/"
+        "ws://" + "127.0.0.1:8000" + "/chat/room/" + room_name + "/"
       );
 
       newChatSocket.onclose = function (e) {
@@ -28,7 +29,7 @@ function Chat(props) {
       console.log("chatsocket; ", chatSocket);
 
       axios
-        .get(`${baseUrl}/chat/${'emad'}/messages`)
+        .get(`${baseUrl}/chat/${room_name}/messages`)
         .then((response) => {
           setMessages(response.data);
         });
@@ -46,7 +47,7 @@ function Chat(props) {
         message: message,
         message_type: "TEXT",
         sender: auth.user.username,
-        room_name: 'emad',
+        room_name: localStorage.getItem('room_name'),
       })
     );
     // console.log("sent");
