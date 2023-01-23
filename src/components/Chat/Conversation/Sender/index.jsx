@@ -8,14 +8,52 @@ import {
 import cn from "classnames";
 import useAuth from "../../../../context/AuthContext";
 import send from "../../assets/send_button.png";
-import { Button } from "@mui/material";
+// import { Button, FormControl } from "@mui/material";
+import Button from '@mui/material/Button';
+// import FormControl from '@mui/material/FormControl';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
 import "./style.scss";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+// import Box from '@mui/material/Box';
+// import { Container } from "@mui/system";
+import { Dialog, DialogContent } from "@mui/material";
+import {Cloudinary, Transformation} from "@cloudinary/url-gen";
+import {scale} from "@cloudinary/url-gen/actions/resize";
 
 const brRegex = /<br>/g;
 
+function QualitySelectDialog({setQuality}) {
+  
+
+  const handleChange = (event) => {
+    setQuality(event.target.value);
+  }
+
+  return (
+    // <Container component={Paper}>
+    // <FormControl fullWidth>
+    <Select
+      // value={quality}
+      defaultValue={360}
+      onChange={handleChange}
+      autoWidth
+      label="Quality"
+    >
+      <MenuItem value={360}>360</MenuItem>
+      <MenuItem value={480}>480</MenuItem>
+      <MenuItem value={720}>720</MenuItem>
+    </Select>
+    // </FormControl>
+    // </Container>
+
+  );
+}
+
 function Sender(props, ref) {
+
+  const [quality, setQuality] = useState(360);
   // const showChat = useSelector((state) => state.behavior.showChat);
   const inputRef = useRef(null);
   const refContainer = useRef(null);
@@ -24,6 +62,29 @@ function Sender(props, ref) {
   const [height, setHeight] = useState(0);
   const [binaryFile, setBinaryFile] = useState();
   const auth = useAuth();
+
+  const [open, setOpen] = useState(false);
+
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'demo'
+    }
+  })
+
+  const myVideo = cld.video('elephants');
+  myVideo.resize(scale().width(400));
+
+  console.log("URL")
+  console.log(myVideo.toURL())
+
+  const handleDialogOpen = () => {
+    setOpen(true);
+  }
+
+  const handleDialogClose = () => {
+    setOpen(false);
+  }
+
   // @ts-ignore
   useEffect(() => {
     if (props.showChat && props.autofocus) inputRef.current?.focus();
@@ -59,6 +120,11 @@ function Sender(props, ref) {
   const handleChooseFile = (e) => {
     let file = e.target.files[0];
     console.log("props",props)
+    console.log(file);
+    if (file.name.endsWith(".jpeg")) {
+      console.log("IN JPEG")
+      handleDialogOpen();
+    }
     props.chatSocket.send(file);
   };
 
@@ -86,7 +152,9 @@ function Sender(props, ref) {
   };
 
   return (
+    
     <div ref={refContainer} className="rcw-sender">
+      {/* <QualitySelect/> */}
       <div
         className={cn("rcw-new-message", {
           "rcw-message-disable": props.disabledInput,
@@ -100,7 +168,10 @@ function Sender(props, ref) {
           ref={inputRef}
           placeholder={props.placeholder}
         >
+          
         </div>
+        {/* <Box display="flex"> */}
+        
           <Button component="label" >
             <AttachFileIcon className="sender-add-button" />
             <input
@@ -110,10 +181,21 @@ function Sender(props, ref) {
               accept=".jpg,.jpeg,.png,.mp4,.mkv"
             />
           </Button>
+          <Dialog open={open} onClose={handleDialogClose}>
+            <DialogContent>
+              <QualitySelectDialog setQuality={setQuality}/>
+              <Button onClick={handleDialogClose}>Cancel</Button>
+              <Button >OK</Button>
+            </DialogContent>
+          </Dialog>
+          
+          {/* </Box> */}
       </div>
+      
       <button type="submit" className="rcw-send" onClick={handleSendMessage}>
         <SendIcon className="rcw-send-icon" alt="buttonAlt" dir="ltr" />
       </button>
+      
     </div>
   );
 }

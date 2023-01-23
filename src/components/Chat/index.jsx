@@ -28,6 +28,18 @@ function Chat(props) {
       chatSocket.current = newChatSocket;
       console.log("chatsocket; ", chatSocket);
 
+      chatSocket.onmessage = function(msg) {
+        console.log("ON MESSAGE")
+        if (msg.data instanceof Blob) {
+          console.log(msg.data)
+          var arrayBuffer = msg.data;
+          var bytes = new Uint8Array(arrayBuffer);
+        }
+        else {
+          console.log(msg.data)
+        }
+      }
+
       axios
         .get(`${baseUrl}/chat/${room_name}/messages`)
         .then((response) => {
