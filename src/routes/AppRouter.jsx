@@ -10,6 +10,7 @@ import SignupPage from "../components/SignupPage";
 import ForgetPasswordPage from "../components/ForgetPasswordPage";
 import ResetPasswordPage from "../components/ResetPasswordPage";
 import Contacts from "../components/contacts";
+import GroupList from "../components/Chat/GroupList";
 
 const AppRouter = () => {
   return (
@@ -26,6 +27,7 @@ const AppRouter = () => {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forget-password" element={<ForgetPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/groups" element={<GroupList />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

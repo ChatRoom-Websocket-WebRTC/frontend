@@ -6,6 +6,9 @@ import Conversation from "./Conversation";
 import axios from "axios";
 import { baseUrl } from "../../utils/constants";
 import useAuth from "../../context/AuthContext";
+import GroupList from "./GroupList";
+import { Grid } from "@mui/material";
+
 function Chat(props) {
   const auth = useAuth();
 
@@ -67,7 +70,7 @@ function Chat(props) {
         message_type: "TEXT",
         sender: auth.user.username,
         room_name: localStorage.getItem("room_name"),
-        file_extension: "empty"
+        file_extension: "empty",
       })
     );
     // console.log("sent");
