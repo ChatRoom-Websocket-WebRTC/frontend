@@ -28,23 +28,30 @@ function Chat(props) {
       chatSocket.current = newChatSocket;
       console.log("chatsocket; ", chatSocket);
 
-      chatSocket.onmessage = function(msg) {
-        console.log("ON MESSAGE")
-        if (msg.data instanceof Blob) {
-          console.log(msg.data)
-          var arrayBuffer = msg.data;
-          var bytes = new Uint8Array(arrayBuffer);
-        }
-        else {
-          console.log(msg.data)
-        }
-      }
-
-      axios
-        .get(`${baseUrl}/chat/${room_name}/messages`)
-        .then((response) => {
-          setMessages(response.data);
+      axios.get(`${baseUrl}/chat/${room_name}/messages`).then((response) => {
+        // setMessages(response.data);
+        console.log("response.data:", response.data);
+        response.data.forEach((msg) => {
+          if (msg.message_type === "FILE") {
+            // convert the message to binary and save it
+            var binaryData = atob(msg.message);
+            var binary = new Uint8Array(binaryData.length);
+            for (var i = 0; i < binaryData.length; i++) {
+              binary[i] = binaryData.charCodeAt(i);
+            }
+            var blob = new Blob([binary], { type: "application/octet-stream" });
+            let newMessage = {
+              ...msg,
+              message: blob,
+            };
+            console.log("new_message:", newMessage);
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+          } else if (msg.message_type === "TEXT") {
+            // save the message as is
+            setMessages((prevMessages) => [...prevMessages, msg]);
+          }
         });
+      });
     }
   }, [auth]);
 
@@ -59,7 +66,8 @@ function Chat(props) {
         message: message,
         message_type: "TEXT",
         sender: auth.user.username,
-        room_name: localStorage.getItem('room_name'),
+        room_name: localStorage.getItem("room_name"),
+        file_extension: "empty"
       })
     );
     // console.log("sent");

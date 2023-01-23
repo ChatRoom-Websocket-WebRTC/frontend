@@ -12,6 +12,7 @@ import './styles.scss';
 import serverAvatar from '../../assets/avatar.jpg';
 import useAuth from '../../../../context/AuthContext';
 import avatar from '../../../../assets/images/avatar.png';
+import FileMessage from './components/FileMessage';
 
 export default function Messages(props) {
   const auth = useAuth();
@@ -36,7 +37,8 @@ export default function Messages(props) {
               alt="profile"
             />
           )}
-          <Message message={message} showTimeStamp={false} is_server={isClient(message.sender)}/>
+          {message?.message_type == 'TEXT' && (<Message message={message} showTimeStamp={false} is_server={isClient(message.sender)}/>)}
+          {message?.message_type == 'FILE' && (<FileMessage message={message} is_server={isClient(message.sender)}/>)}
         </div>
       ))}
       <Loader typing={props?.messages?.length === 0} />
